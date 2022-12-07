@@ -1,0 +1,27 @@
+---
+- name: copying the files
+  hosts: all
+  vars:
+    variable_to_be_replaced: 'Hello this is madhusudhan'
+    inline_variable: 'this will change in real time'
+  tasks: 
+    - name: cp the file from src to destination
+      copy:
+        src: install_tomcat.yaml
+        dest: /root
+        mode: 0777
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+      become: true
+
+    - name: template module to copy and replace
+      template:
+        src: install_tomcat.yaml.j2
+        dest: /root/install_tomcat.yaml
+      become: true
+
+    - name: testing template
+      template:
+        src: hello_world.j2
+        dest: /root/hello_world.txt
+      become: true

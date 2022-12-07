@@ -1,0 +1,29 @@
+---
+  - name: Install jenkins 
+    hosts: all
+    become: true
+    tasks:
+
+       - name: getting jenkins key
+         apt_key: url=https://pkg.jenkins.io/debian-stable/jenkins.io.key state=present
+         become: yes
+
+       - name: configure jenkins repo
+         apt_repository: repo='deb  http://pkg.jenkins.io/debian-stable binary/' state=present
+         become: yes
+
+       - name: updating packages
+         apt:
+           update_cache: true
+                
+       - name: insatlling jenkins
+         apt:
+           name: jenkins
+           state: latest
+
+       - name: starting jenkins server
+         service:
+           name: jenkins
+           state: started 
+       
+

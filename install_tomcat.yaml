@@ -1,0 +1,31 @@
+---
+  - name: Install tomcat 
+    hosts: all
+    tasks:
+       - name: updating packages
+         apt:
+           name: "*"
+           state: latest
+       
+
+       - name: installing java
+         apt:
+           name: default-jdk
+           state: latest
+
+       - name: installing tomcat server
+         get_url: 
+             url: https://dlcdn.apache.org/tomcat/tomcat-10/v10.0.27/bin/apache-tomcat-10.0.27.tar.gz
+             dest: /opt/
+
+       - name: extracting tar file
+         unarchive: 
+              src: "/opt/apache-tomcat-10.0.27.tar.gz"
+              dest: /opt/
+              remote_src: yes
+
+       - name: renaming the apache tomcat folder
+         command: mv /opt/apache-tomcat-10.0.27 /opt/tomcat
+  
+       - name: starting tomat
+         shell: nohup /opt/tomcat/bin/startup.sh &
