@@ -17,11 +17,11 @@
     - name: template module to copy and replace
       template:
         src: install_tomcat.yaml.j2
-        dest: /root/install_tomcat.yaml
+        dest: /root/ansible_output/install_tomcat.yaml
       become: true
 
     - name: testing template
       template:
         src: hello_world.j2
-        dest: /root/hello_world.txt
+        dest: /root/ansible_output/hello_world.txt
       become: true
